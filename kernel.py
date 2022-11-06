@@ -7,8 +7,11 @@ class Kernel:
 
     def __init__(self):
         self.kernel_linux_folder = r"/usr/src/linux"
-        self.kernel_linux_config_backup_folder = "kernel_config"
-        self.last_working_kernel_dir = "last_working_config"
+        self.kernel_linux_config_backup_folder_name = "kernel_config"
+        self.last_working_kernel_dir_name = "last_working_config"
+        self.kernel_linux_folder_config = os.path.join(self.kernel_linux_folder, ".config")
+        self.kernel_linux_config_backup_folder_path = os.path.join(self.kernel_linux_folder, self.kernel_linux_config_backup_folder_name)
+        
         self.date_time_stamp_string = None
         self.log_file_location = None
 
@@ -72,9 +75,9 @@ class Kernel:
         folderPath = os.path.join(self.kernel_linux_folder, self.kernel_linux_config_backup_folder)
         all_files = os.listdir(folderPath)
         config_files = []
-        for all_file in all_files:
-            if all_file.startswith(".config"):
-                config_files.append(all_file)
+        for config_file in all_files:
+            if config_file.startswith(".config"):
+                config_files.append(config_file)
         pass
 
 
