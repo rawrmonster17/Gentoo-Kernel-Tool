@@ -39,20 +39,18 @@ class Kernel:
     def create_working_env(self):
         desired_path = os.path.join(self.kernel_linux_folder, self.kernel_linux_config_backup_folder)
         working_path = os.path.join(self.kernel_linux_folder, self.last_working_kernel_dir)
-        if not os.path.isdir(desired_path) or not os.path.isdir(working_path):
-            # I hate the way this looks. Todo, break this into two seperate checks instead of one so I do not have to worry if a file is already created. Other wise I get a [Errno 17] File exists:
+        if not os.path.isdir(desired_path):
             print("creating config dir")
             try:
                 os.mkdir(desired_path)
-            except:
-                pass
-            print("creating working dir")
+            except Exception as e:
+                print(e)
+        if not os.path.isdir(working_path):
+            print("creating working directory")
             try:
                 os.mkdir(working_path)
-            except:
-                pass
-        else:
-            print("No need to create working/config directory because it already exists")
+            except Exception as e:
+                print(e)
     
     def save_last_good_kernel_config(self):
         path = os.path.join(self.kernel_linux_folder, self.last_working_kernel_dir)
@@ -63,7 +61,10 @@ class Kernel:
             orginal_config_file = os.path.join(self.kernel_linux_folder, ".config")
             backup_config_file = os.path.join(path, ".config")
             # this should do some sort of check to verify it wrote correclty but I am not wanting to do this today
-            shutil.copyfile(orginal_config_file, backup_config_file)
+            try:
+                shutil.copyfile(orginal_config_file, backup_config_file)
+            except Exception as e:
+                print(e)
         else:
             pass
 
